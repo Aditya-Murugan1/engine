@@ -103,13 +103,26 @@ _JD_NOISE_PHRASES = {
     "kedaara capital", "private equity analyst", "cfa level",
     "nice to have", "about the role", "required skills",
     "strong sql", "strong python", "deep expertise",
+    "senior ml engineer", "junior ml engineer", "ml engineer",
+    "growth marketing manager", "marketing manager", "product manager",
+    "investment banking analyst", "data scientist", "data engineer",
+    "software engineer", "frontend engineer", "backend engineer",
+    "hubspot crm", "excel advanced", "advanced excel",
+    "google analytics 4",  # keep as skill but not as phrase-noise
+}
+
+# Job title patterns — multi-word phrases ending in a title word
+_TITLE_WORDS = {
+    "engineer", "manager", "analyst", "developer", "designer",
+    "scientist", "architect", "consultant", "specialist", "lead",
+    "director", "head", "officer", "associate", "intern", "executive",
 }
 
 # Known tech skill keywords to scan directly — ensures nothing important is missed
 _JD_SKILL_KEYWORDS = [
     # Programming
-    "Python","SQL","Java","JavaScript","TypeScript","C++","C#","Go","Scala","Rust",
-    "R","MATLAB","VBA","Bash","PHP","Ruby","Swift","Kotlin",
+    "Python","SQL","Java","JavaScript","TypeScript","C++","C#","Scala","Rust",
+    "MATLAB","VBA","Bash","PHP","Ruby","Swift","Kotlin",
     # ML / AI
     "PyTorch","TensorFlow","Keras","Scikit-learn","Hugging Face","BERT","NLP",
     "XGBoost","LightGBM","CatBoost","LangChain","LlamaIndex","OpenCV",
@@ -169,10 +182,13 @@ def extract_skills_from_jd(jd_text: str) -> list:
     for pattern in _SKILL_PATTERNS:
         for match in re.finditer(pattern, jd_text):
             term = (match.group(1) if match.lastindex else match.group()).strip().replace("\n", " ").replace("\r", "")
+            term_words = term.lower().split()
             if (2 < len(term) < 40
                     and term.lower() not in _JD_STOPWORDS
                     and term.lower() not in _JD_NOISE_PHRASES
-                    and not all(w.lower() in _JD_STOPWORDS for w in term.split())
+                    and not all(w in _JD_STOPWORDS for w in term_words)
+                    # Filter job title phrases: "Senior ML Engineer", "Growth Marketing Manager"
+                    and not (len(term_words) >= 2 and term_words[-1] in _TITLE_WORDS)
                     and any(c.isupper() or c in "+#./0123456789-" for c in term)):
                 candidates.add(term)
 
@@ -254,15 +270,17 @@ def match_courses(gaps: list, courses_json: str,
     sims       = cosine_similarity(gap_vecs, course_matrix)
 
     recommendations = []
-    for i, gap in enumerate(gaps):
-        gap_lower = gap["skill"].lower()
+    used_courses = set()   # each course appears only once across all gaps
 
-        # Strategy 1: exact match in skills_covered
-        # Check exact match + simple plural/singular variant
+    for i, gap in enumerate(gaps):
+        gap_lower    = gap["skill"].lower()
         gap_variants = {gap_lower, gap_lower + "s", gap_lower.rstrip("s")}
+
+        # Strategy 1: exact match — skip if course already used
         exact_idx = next(
             (j for j, skill_set in enumerate(course_skills_lower)
-             if gap_variants & skill_set), None
+             if gap_variants & skill_set and j not in used_courses),
+            None
         )
         if exact_idx is not None:
             recommendations.append({
@@ -271,18 +289,25 @@ def match_courses(gaps: list, courses_json: str,
                 "course_title": courses[exact_idx]["title"],
                 "match_score":  1.0,
             })
+            used_courses.add(exact_idx)
             continue
 
-        # Strategy 2: semantic similarity fallback
-        best_idx   = int(np.argmax(sims[i]))
-        best_score = float(sims[i][best_idx])
-        if best_score >= threshold:
-            recommendations.append({
-                "gap_skill":    gap["skill"],
-                "course_id":    courses[best_idx]["id"],
-                "course_title": courses[best_idx]["title"],
-                "match_score":  round(best_score, 4),
-            })
+        # Strategy 2: semantic similarity — pick best unused course
+        ranked = np.argsort(sims[i])[::-1]
+        for best_idx in ranked:
+            idx = int(best_idx)
+            if idx in used_courses:
+                continue
+            best_score = float(sims[i][idx])
+            if best_score >= threshold:
+                recommendations.append({
+                    "gap_skill":    gap["skill"],
+                    "course_id":    courses[idx]["id"],
+                    "course_title": courses[idx]["title"],
+                    "match_score":  round(best_score, 4),
+                })
+                used_courses.add(idx)
+            break
 
     return sorted(recommendations, key=lambda x: x["match_score"], reverse=True)
 

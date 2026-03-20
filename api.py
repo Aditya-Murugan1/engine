@@ -1,15 +1,34 @@
-# api.py  v2.0 — PathForge backend
+# api.py  v3.0 — PathForge backend
 # Run: python -m uvicorn api:app --reload --port 8000
+#
+# Changes from v2:
+#   - /roadmap now delegates to roadmap_engine.build_roadmap() — fully
+#     personalised, dependency-ordered, week-stamped roadmap per candidate.
+#   - /roadmap accepts matchedSkills + meta (candidateName, targetRole,
+#     matchScore) alongside gapSkills so the engine has full context.
+#   - Startup uses lifespan context manager (replaces deprecated @on_event).
+#   - NER pipeline cached at module level — loads once, not per-request.
 
 import os, sys, re, json, base64, traceback, io
 from pathlib import Path
+from contextlib import asynccontextmanager
+from typing import Optional
 from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-app = FastAPI(title="PathForge Engine v2", version="2.0")
+
+# ── Startup / shutdown (lifespan replaces deprecated @on_event) ───────────────
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    _startup()
+    yield
+
+
+app = FastAPI(title="PathForge Engine v3", version="3.0", lifespan=lifespan)
 app.add_middleware(CORSMiddleware,
     allow_origins=["http://localhost:5173","http://localhost:3000","http://127.0.0.1:5173"],
     allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
@@ -264,8 +283,8 @@ _NOISE = {
 _onet_index: dict[str, str] = {}
 
 
-@app.on_event("startup")
-async def startup():
+def _startup():
+    """Called once at server start via lifespan context manager."""
     global _onet_index
     _onet_index.update(_SKILL_INDEX)
     try:
@@ -424,7 +443,20 @@ def infer_level(skill: str, text: str) -> str:
 def compute_skill_gaps(resume_skills: list, jd_skills: list) -> list:
     from gap_engine import compute_gaps as _cg
     resume_lower = {s.lower() for s in resume_skills}
-    true_gaps    = [s for s in jd_skills if s.lower() not in resume_lower]
+
+    # Pre-filter 1: exact match
+    # Pre-filter 2: substring match (e.g. "Google Analytics 4" covered by "Google Analytics")
+    def is_covered(jd_skill: str) -> bool:
+        jl = jd_skill.lower()
+        if jl in resume_lower:
+            return True
+        # Substring: resume has "Google Analytics", JD asks "Google Analytics 4"
+        for rs in resume_lower:
+            if rs in jl or jl in rs:
+                return True
+        return False
+
+    true_gaps = [s for s in jd_skills if not is_covered(s)]
     if not true_gaps:
         return []
     raw = _cg(resume_skills, true_gaps)
@@ -668,18 +700,110 @@ async def analyze(
 
 
 class RoadmapRequest(BaseModel):
-    gapSkills: list[dict]
+    """
+    Full context for a personalised roadmap.
+    gapSkills and matchedSkills come directly from the /analyze response.
+    """
+    gapSkills:     list[dict]
+    matchedSkills: list[dict]    = []
+    candidateName: str           = "Candidate"
+    targetRole:    str           = "Target Role"
+    matchScore:    int           = 0
+    coursesJson:   Optional[str] = "data/courses.json"
 
 
 @app.post("/roadmap")
 def roadmap(body: RoadmapRequest):
+    """
+    Build a personalised, dependency-ordered, week-stamped learning roadmap.
+
+    Accepts the full /analyze payload (gapSkills + matchedSkills + meta) and
+    delegates to roadmap_engine.build_roadmap() for all logic.
+
+    Returns a RoadmapTimeline dict:
+      {
+        candidateName, targetRole, matchScore, totalWeeks,
+        highWeeks, mediumWeeks, lowWeeks, summary, knownSkills,
+        nodes: [{
+          id, skill, priority, gapScore, weekStart, weekEnd,
+          durationWeeks, courseId, courseTitle, description,
+          prerequisites, unlockedBy, category, isPrerequisiteOnly
+        }]
+      }
+    """
     try:
-        nodes = build_roadmap(body.gapSkills)
-        print(f"[/roadmap] {len(body.gapSkills)} gaps → {len(nodes)} nodes")
-        return nodes
+        from roadmap_engine import build_roadmap, roadmap_to_dict
+
+        # Re-construct gap_report format that roadmap_engine expects.
+        # gap scores from /analyze are stored in gapSkill["score"] if present,
+        # otherwise fall back to a sensible default by priority label.
+        _pri_score = {"high": 0.25, "medium": 0.37, "low": 0.48}
+
+        gap_report = {
+            "gaps": [
+                {
+                    "skill":  g["name"],
+                    "score":  g.get("score", _pri_score.get(g.get("priority", "medium"), 0.37)),
+                    "source": "JD",
+                }
+                for g in body.gapSkills
+            ],
+            "recommendations": [],
+            "training_hints":  {"class_weights": {"O": 1.0}},
+        }
+
+        matched_names = [s["name"] for s in body.matchedSkills]
+
+        timeline = build_roadmap(
+            gap_report     = gap_report,
+            matched_skills = matched_names,
+            candidate_name = body.candidateName,
+            target_role    = body.targetRole,
+            match_score    = body.matchScore,
+            courses_json   = body.coursesJson or "data/courses.json",
+        )
+
+        result = roadmap_to_dict(timeline)
+        print(f"[/roadmap] {len(body.gapSkills)} gaps → {len(timeline.nodes)} nodes "
+              f"· {timeline.total_weeks} weeks  [{body.candidateName}]")
+        return result
+
     except Exception as e:
         traceback.print_exc()
-        return []
+        return {"error": str(e), "nodes": [], "total_weeks": 0}
+
+
+@app.post("/roadmap/from_report")
+def roadmap_from_report(
+    gap_report_path: str = "data/gap_report.json",
+    matched:         str = "",
+    candidate_name:  str = "Candidate",
+    target_role:     str = "Target Role",
+    match_score:     int = 0,
+    courses_json:    str = "data/courses.json",
+):
+    """
+    Build a roadmap directly from an on-disk gap_report.json.
+    Useful for CLI testing and the phase1_test.py pipeline.
+
+    matched: comma-separated list of already-known skill names.
+    """
+    try:
+        from roadmap_engine import build_roadmap, roadmap_to_dict
+        gap_report    = json.loads(Path(gap_report_path).read_text())
+        matched_skills = [s.strip() for s in matched.split(",") if s.strip()]
+        timeline = build_roadmap(
+            gap_report     = gap_report,
+            matched_skills = matched_skills,
+            candidate_name = candidate_name,
+            target_role    = target_role,
+            match_score    = match_score,
+            courses_json   = courses_json,
+        )
+        return roadmap_to_dict(timeline)
+    except Exception as e:
+        traceback.print_exc()
+        return {"error": str(e)}
 
 
 if __name__ == "__main__":
