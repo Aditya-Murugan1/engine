@@ -1,0 +1,25 @@
+Job Title: Mid-Level Machine Learning Engineer
+Company: TechCorp India
+
+About the Role:
+We are looking for a Machine Learning Engineer to join our AI team.
+You will build and deploy ML models that power our recommendation engine.
+
+Required Skills and Experience:
+- Strong proficiency in Python and experience with PyTorch or TensorFlow
+- Experience with NLP techniques including transformers and BERT
+- Knowledge of MLflow for experiment tracking and model registry
+- Experience with Kubernetes and Docker for model deployment
+- Familiarity with Kafka for real-time data pipelines
+- SQL and experience with data warehouses such as Snowflake or BigQuery
+- Understanding of CI/CD pipelines and DevOps practices
+- Experience with feature stores such as Feast or Tecton
+
+Nice to Have:
+- Knowledge of Spark or Dask for large-scale data processing
+- Experience with Airflow for pipeline orchestration
+- Familiarity with Hugging Face transformers library
+- Knowledge of vector databases such as Pinecone or Weaviate
+
+Education:
+Bachelor's or Master's degree in Computer Science, Engineering, or related field.

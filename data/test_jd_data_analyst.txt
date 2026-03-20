@@ -1,0 +1,15 @@
+Job Title: Data Analyst
+
+Required Skills:
+- Python (3+ years)
+- SQL and database querying
+- Machine Learning basics
+- Data Visualization (Power BI or Tableau)
+- Statistical Analysis
+- Excel (Advanced)
+- Communication and presentation skills
+- Problem solving
+
+Nice to have:
+- Experience with AWS or cloud platforms
+- Knowledge of NLP or AI tools

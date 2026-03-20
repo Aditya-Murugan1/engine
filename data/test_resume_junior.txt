@@ -1,0 +1,12 @@
+Name: Priya Sharma
+Education: B.Tech Computer Science, 2024
+
+Skills: Python (basic), HTML, CSS, Microsoft Excel, English communication
+
+Projects:
+- Built a simple calculator in Python
+- Created a personal portfolio website using HTML/CSS
+
+Certifications: None
+
+Work Experience: None (fresher)

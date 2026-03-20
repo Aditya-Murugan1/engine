@@ -1,0 +1,17 @@
+# ── Core ML ───────────────────────────────────────────────────────────────────
+torch>=2.0.0                  # tensor ops + GPU training
+transformers>=4.38.0          # BERT, Trainer, pipeline — skill_extractor + train
+sentence-transformers>=2.6.0  # all-MiniLM-L6-v2 embeddings — gap_engine
+
+# ── Evaluation ────────────────────────────────────────────────────────────────
+seqeval>=1.2.2                # span-level NER metrics (F1, precision, recall)
+
+# ── Data + numerics ───────────────────────────────────────────────────────────
+scikit-learn>=1.3.0           # cosine_similarity — gap_engine
+pandas>=2.0.0                 # O*NET CSV loading — gap_engine
+numpy>=1.24.0                 # array ops throughout
+
+# ── NOT included (add later if needed) ───────────────────────────────────────
+# peft        — for LoRA fine-tuning (Phase 3+, not used yet)
+# wandb       — experiment tracking (using local JSON metrics instead)
+# accelerate  — multi-GPU training (single GPU covered by Trainer fp16 flag)

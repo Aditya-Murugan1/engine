@@ -1,0 +1,10 @@
+{"tokens": ["Proficient", "in", "Python", "and", "Scikit-learn", "for", "machine", "learning"], "labels": ["O", "O", "B-SKILL", "O", "B-SKILL", "O", "O", "O"]}
+{"tokens": ["Managed", "deployments", "on", "AWS", "S3", "and", "Lambda"], "labels": ["O", "O", "O", "B-SKILL", "I-SKILL", "O", "B-SKILL"]}
+{"tokens": ["Bachelor", "of", "Science", "in", "Information", "Technology"], "labels": ["B-EDUCATION", "I-EDUCATION", "I-EDUCATION", "O", "B-EDUCATION", "I-EDUCATION"]}
+{"tokens": ["Senior", "Data", "Scientist", "at", "Wipro", "2021", "to", "2023"], "labels": ["B-EXPERIENCE", "I-EXPERIENCE", "I-EXPERIENCE", "O", "B-EXPERIENCE", "O", "O", "O"]}
+{"tokens": ["Used", "Flask", "and", "React", "to", "build", "internal", "tools"], "labels": ["O", "B-SKILL", "O", "B-SKILL", "O", "O", "O", "O"]}
+{"tokens": ["Containerised", "apps", "using", "Docker", "and", "orchestrated", "with", "Kubernetes"], "labels": ["O", "O", "O", "B-SKILL", "O", "O", "O", "B-SKILL"]}
+{"tokens": ["Master", "of", "Science", "in", "Computer", "Science", "IIT", "Bombay"], "labels": ["B-EDUCATION", "I-EDUCATION", "I-EDUCATION", "O", "B-EDUCATION", "I-EDUCATION", "B-EDUCATION", "I-EDUCATION"]}
+{"tokens": ["Worked", "on", "NLP", "pipelines", "using", "BERT", "and", "Hugging", "Face"], "labels": ["O", "O", "B-SKILL", "O", "O", "B-SKILL", "O", "B-SKILL", "I-SKILL"]}
+{"tokens": ["Familiar", "with", "Git", "GitHub", "and", "CI/CD", "via", "Jenkins"], "labels": ["O", "O", "B-SKILL", "B-SKILL", "O", "B-SKILL", "O", "B-SKILL"]}
+{"tokens": ["Data", "Engineer", "at", "Zomato", "building", "Kafka", "and", "Spark", "pipelines"], "labels": ["B-EXPERIENCE", "I-EXPERIENCE", "O", "B-EXPERIENCE", "O", "B-SKILL", "O", "B-SKILL", "O"]}

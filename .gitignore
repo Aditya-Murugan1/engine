@@ -1,0 +1,11 @@
+﻿__pycache__/
+*.pyc
+*.pyo
+models/
+metrics/
+logs/
+data/Resume.csv
+data/Skills.xlsx
+data/gap_report.json
+venv/
+.env

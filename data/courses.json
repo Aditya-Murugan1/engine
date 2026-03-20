@@ -1,0 +1,77 @@
+[
+  {
+    "id": "c01",
+    "title": "PyTorch for Deep Learning — Zero to Hero",
+    "skills_covered": ["PyTorch", "Deep Learning", "Neural Networks", "GPU Training", "Backpropagation"]
+  },
+  {
+    "id": "c02",
+    "title": "Natural Language Processing with Transformers",
+    "skills_covered": ["NLP", "BERT", "Transformers", "Hugging Face", "Text Classification", "Named Entity Recognition"]
+  },
+  {
+    "id": "c03",
+    "title": "MLOps: From Experiment to Production",
+    "skills_covered": ["MLflow", "Experiment Tracking", "Model Registry", "CI/CD", "Model Deployment", "Monitoring"]
+  },
+  {
+    "id": "c04",
+    "title": "Kubernetes for ML Engineers",
+    "skills_covered": ["Kubernetes", "Docker", "Container Orchestration", "Helm", "Model Serving", "Scaling"]
+  },
+  {
+    "id": "c05",
+    "title": "Real-Time Data Pipelines with Kafka",
+    "skills_covered": ["Kafka", "Streaming Data", "Event-Driven Architecture", "Data Pipelines", "Flink"]
+  },
+  {
+    "id": "c06",
+    "title": "Snowflake and BigQuery for Data Engineers",
+    "skills_covered": ["Snowflake", "BigQuery", "Data Warehousing", "SQL", "dbt", "Analytics Engineering"]
+  },
+  {
+    "id": "c07",
+    "title": "Apache Spark for Large-Scale ML",
+    "skills_covered": ["Spark", "PySpark", "Distributed Computing", "Dask", "Large-Scale Data Processing"]
+  },
+  {
+    "id": "c08",
+    "title": "Apache Airflow: Pipeline Orchestration",
+    "skills_covered": ["Airflow", "DAGs", "Pipeline Orchestration", "Workflow Automation", "Scheduling"]
+  },
+  {
+    "id": "c09",
+    "title": "Vector Databases and Semantic Search",
+    "skills_covered": ["Pinecone", "Weaviate", "Vector Databases", "Embeddings", "Semantic Search", "FAISS"]
+  },
+  {
+    "id": "c10",
+    "title": "Feature Stores for Machine Learning",
+    "skills_covered": ["Feast", "Tecton", "Feature Stores", "Feature Engineering", "Online/Offline Features"]
+  },
+  {
+    "id": "c11",
+    "title": "TensorFlow and Keras Masterclass",
+    "skills_covered": ["TensorFlow", "Keras", "Deep Learning", "Model Training", "Transfer Learning"]
+  },
+  {
+    "id": "c12",
+    "title": "DevOps and CI/CD for Engineers",
+    "skills_covered": ["CI/CD", "GitHub Actions", "Jenkins", "DevOps", "Infrastructure as Code", "Terraform"]
+  },
+  {
+    "id": "c13",
+    "title": "AWS for Machine Learning",
+    "skills_covered": ["AWS SageMaker", "AWS Lambda", "S3", "EC2", "Cloud ML", "AWS Glue"]
+  },
+  {
+    "id": "c14",
+    "title": "Statistics and Probability for ML",
+    "skills_covered": ["Statistics", "Probability", "Hypothesis Testing", "A/B Testing", "Bayesian Methods"]
+  },
+  {
+    "id": "c15",
+    "title": "SQL for Data Engineering",
+    "skills_covered": ["SQL", "Window Functions", "Query Optimisation", "Indexing", "PostgreSQL", "BigQuery"]
+  }
+]

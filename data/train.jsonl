@@ -1,0 +1,30 @@
+{"tokens": ["Python", "developer", "with", "AWS", "and", "Docker", "experience"], "labels": ["B-SKILL", "O", "O", "B-SKILL", "O", "B-SKILL", "B-EXPERIENCE"]}
+{"tokens": ["Built", "REST", "APIs", "using", "Python", "and", "FastAPI", "for", "an", "internal", "HR", "automation", "platform"], "labels": ["O", "B-SKILL", "I-SKILL", "O", "B-SKILL", "O", "B-SKILL", "O", "O", "O", "O", "O", "O"]}
+{"tokens": ["Worked", "with", "PostgreSQL", "and", "Redis", "for", "data", "storage", "and", "caching"], "labels": ["O", "O", "B-SKILL", "O", "B-SKILL", "O", "O", "O", "O", "O"]}
+{"tokens": ["Deployed", "services", "on", "AWS", "EC2", "and", "managed", "infrastructure", "with", "Terraform"], "labels": ["O", "O", "O", "B-SKILL", "I-SKILL", "O", "O", "O", "O", "B-SKILL"]}
+{"tokens": ["Wrote", "unit", "tests", "using", "pytest", "maintained", "85%", "code", "coverage"], "labels": ["O", "O", "O", "O", "B-SKILL", "O", "O", "O", "O"]}
+{"tokens": ["Cleaned", "and", "analysed", "datasets", "using", "Pandas", "and", "NumPy"], "labels": ["O", "O", "O", "O", "O", "B-SKILL", "O", "B-SKILL"]}
+{"tokens": ["Built", "dashboards", "in", "Tableau", "for", "client", "reporting"], "labels": ["O", "O", "O", "B-SKILL", "O", "O", "O"]}
+{"tokens": ["Languages", "Python", "SQL", "JavaScript"], "labels": ["O", "B-SKILL", "B-SKILL", "B-SKILL"]}
+{"tokens": ["Frameworks", "FastAPI", "Flask", "React"], "labels": ["O", "B-SKILL", "B-SKILL", "B-SKILL"]}
+{"tokens": ["ML", "Data", "Pandas", "NumPy", "Scikit-learn", "Matplotlib"], "labels": ["O", "O", "B-SKILL", "B-SKILL", "B-SKILL", "B-SKILL"]}
+{"tokens": ["Cloud", "AWS", "EC2", "S3", "Lambda"], "labels": ["O", "B-SKILL", "I-SKILL", "B-SKILL", "B-SKILL"]}
+{"tokens": ["Tools", "Git", "Docker", "Terraform", "Postman", "Linux"], "labels": ["O", "B-SKILL", "B-SKILL", "B-SKILL", "B-SKILL", "B-SKILL"]}
+{"tokens": ["Bachelor", "of", "Engineering", "in", "Computer", "Science"], "labels": ["B-EDUCATION", "I-EDUCATION", "I-EDUCATION", "O", "B-EDUCATION", "I-EDUCATION"]}
+{"tokens": ["University", "of", "Mumbai", "2020", "GPA", "8.4"], "labels": ["B-EDUCATION", "I-EDUCATION", "I-EDUCATION", "O", "O", "O"]}
+{"tokens": ["Software", "Engineer", "Infosys", "Pune", "2020", "2023"], "labels": ["B-EXPERIENCE", "I-EXPERIENCE", "B-EXPERIENCE", "O", "O", "O"]}
+{"tokens": ["Junior", "Data", "Analyst", "Freelance", "2019", "2020"], "labels": ["B-EXPERIENCE", "I-EXPERIENCE", "I-EXPERIENCE", "B-EXPERIENCE", "O", "O"]}
+{"tokens": ["AWS", "Certified", "Cloud", "Practitioner", "2022"], "labels": ["B-SKILL", "I-SKILL", "I-SKILL", "I-SKILL", "O"]}
+{"tokens": ["Google", "Data", "Analytics", "Certificate", "2021"], "labels": ["B-EDUCATION", "I-EDUCATION", "I-EDUCATION", "I-EDUCATION", "O"]}
+{"tokens": ["Strong", "proficiency", "in", "Python", "and", "experience", "with", "PyTorch", "or", "TensorFlow"], "labels": ["O", "O", "O", "B-SKILL", "O", "O", "O", "B-SKILL", "O", "B-SKILL"]}
+{"tokens": ["Experience", "with", "NLP", "techniques", "including", "transformers", "and", "BERT"], "labels": ["B-EXPERIENCE", "O", "B-SKILL", "O", "O", "B-SKILL", "O", "B-SKILL"]}
+{"tokens": ["Knowledge", "of", "MLflow", "for", "experiment", "tracking", "and", "model", "registry"], "labels": ["O", "O", "B-SKILL", "O", "O", "O", "O", "O", "O"]}
+{"tokens": ["Experience", "with", "Kubernetes", "and", "Docker", "for", "model", "deployment"], "labels": ["B-EXPERIENCE", "O", "B-SKILL", "O", "B-SKILL", "O", "O", "O"]}
+{"tokens": ["Familiarity", "with", "Kafka", "for", "real-time", "data", "pipelines"], "labels": ["O", "O", "B-SKILL", "O", "O", "O", "O"]}
+{"tokens": ["SQL", "and", "experience", "with", "data", "warehouses", "such", "as", "Snowflake", "or", "BigQuery"], "labels": ["B-SKILL", "O", "O", "O", "O", "O", "O", "O", "B-SKILL", "O", "B-SKILL"]}
+{"tokens": ["Understanding", "of", "CI/CD", "pipelines", "and", "DevOps", "practices"], "labels": ["O", "O", "B-SKILL", "O", "O", "B-SKILL", "O"]}
+{"tokens": ["Experience", "with", "feature", "stores", "such", "as", "Feast", "or", "Tecton"], "labels": ["B-EXPERIENCE", "O", "O", "O", "O", "O", "B-SKILL", "O", "B-SKILL"]}
+{"tokens": ["Knowledge", "of", "Spark", "or", "Dask", "for", "large-scale", "data", "processing"], "labels": ["O", "O", "B-SKILL", "O", "B-SKILL", "O", "O", "O", "O"]}
+{"tokens": ["Experience", "with", "Airflow", "for", "pipeline", "orchestration"], "labels": ["B-EXPERIENCE", "O", "B-SKILL", "O", "O", "O"]}
+{"tokens": ["Familiarity", "with", "Hugging", "Face", "transformers", "library"], "labels": ["O", "O", "B-SKILL", "I-SKILL", "I-SKILL", "O"]}
+{"tokens": ["Knowledge", "of", "vector", "databases", "such", "as", "Pinecone", "or", "Weaviate"], "labels": ["O", "O", "O", "O", "O", "O", "B-SKILL", "O", "B-SKILL"]}
